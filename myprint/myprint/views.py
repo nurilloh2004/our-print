@@ -46,3 +46,12 @@ def invoice(request):
 
 def application_order(request):
     return render(request, 'main/application_order.html')
+
+
+
+def create_order_form(request):
+    form = OrderForm()  
+    context = {
+        "form": form
+    }
+    return render(request, "main/application_order.html", context)

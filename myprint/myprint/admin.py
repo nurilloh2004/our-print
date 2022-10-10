@@ -19,6 +19,20 @@ admin.site.register(Sponsors)
 admin.site.register(Contact)
 admin.site.register(Portfolio)
 admin.site.register(SocialMedia)
-admin.site.register(OrderForm)
-admin.site.register(Order)
 admin.site.register(Form)
+
+
+
+class OrderInLineAdmin(admin.TabularInline):
+    model = OrderForm
+
+
+class OrderAdmin(admin.ModelAdmin):
+    inlines = [OrderInLineAdmin]
+
+
+admin.site.register(Order, OrderAdmin)
+
+# @admin.register(User)
+# class OrderAdmin(admin.ModelAdmin):
+#     pass
