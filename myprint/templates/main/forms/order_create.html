@@ -1,0 +1,12 @@
+{% extends "application_order.html" %}
+
+{% block content %}
+
+
+<button type="button" hx-get="{% url 'create-book-form' %}" hx-target="#bookforms" hx-swap="beforeend">
+    Add form
+</button>
+
+<div id="bookforms"></div>
+
+{% endblock  content %}

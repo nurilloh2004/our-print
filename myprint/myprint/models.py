@@ -211,4 +211,44 @@ class SocialMedia(models.Model):
 
 
 
+
+class OrderForm(models.Model):
+    Product_Status = (
+        ('шт', 'шт'),
+        ('усл', 'усл'),
+    )
+    name = models.CharField(max_length=65)
+    status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
+    amount = models.IntegerField()
+    price = models.PositiveIntegerField()
+    price_free_VAT = models.PositiveIntegerField()
+    VAT = models.FloatField()
+    price_with_VAT = models.PositiveIntegerField()
+    total = models.PositiveIntegerField()    
+    total_price_with_VAT = models.PositiveIntegerField()    
+    total_price_ALL = models.PositiveIntegerField()        
     
+
+    def __str__(self) -> str:
+                return self.name
+    
+
+class Order(models.Model):
+    id_name_order = models.CharField(max_length=300)
+    name_client = models.CharField(max_length=65)
+    client_phone_number = models.CharField(max_length=65)
+    manager_name = models.CharField(max_length=65)
+    date_order = models.DateTimeField(auto_now_add=True)
+    ready_product_date_order = models.DateTimeField()
+
+
+    def __str__(self) -> str:
+                return self.id_name_order
+    
+
+class Form(models.Model):
+    full_name = models.CharField(max_length=65)
+    phone_number = models.CharField(max_length=15)
+
+    def __str__(self) -> str:
+                return self.full_name
