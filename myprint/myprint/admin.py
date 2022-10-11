@@ -21,7 +21,5 @@ admin.site.register(Portfolio)
 admin.site.register(SocialMedia)
 admin.site.register(Form)
 admin.site.register(OrderForm)
+admin.site.register(Customer)
 
-# @admin.register(User)
-# class OrderAdmin(admin.ModelAdmin):
-#     pass

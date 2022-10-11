@@ -55,14 +55,14 @@ def advertisement(request):
 def invoice(request):
     return render(request, 'main/invoice.html')
 
-def application_order(request):
-    orders = OrderForm.objects.all()
-    form = OrderMForm()
-    if request.method == "POST":
-        form = OrderMForm
+# def application_order(request):
+#     orders = OrderForm.objects.all()
+#     form = OrderMForm()
+#     if request.method == "POST":
+#         form = OrderMForm
 
-    context = {'orders' : orders, 'form' : form}
-    return render(request, 'main/application_order.html', context=context)
+#     context = {'orders' : orders, 'form' : form}
+#     return render(request, 'main/application_order.html', context=context)
 
 
 class OrderCreateView(CreateView):
@@ -125,7 +125,7 @@ def test_form(request):
 #     return render(request, 'Reddit_app/order_from_post.html', {"form": form})
 
 
-
+@csrf_exempt
 @login_required(login_url='login')
 def listView(request):
     if request.user.is_authenticated:
@@ -160,7 +160,7 @@ def listView(request):
 
 
 
-
+@csrf_exempt
 def create(request):
 	context = {}
 	MarksFormset = modelformset_factory(OrderForm, form=OrdersForm)	
@@ -189,7 +189,7 @@ def create(request):
 
 
 
-
+@csrf_exempt
 def list(request):
 	datas = Customer.objects.all()
 	return render(request, 'multi_forms/list.html', {'datas':datas})
