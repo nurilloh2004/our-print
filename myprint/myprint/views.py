@@ -170,7 +170,7 @@ def create(request):
     
     if request.method == "POST":
         if form.is_valid() and formset.is_valid():
-            print("print POST-------------->>>>", request.method)
+            print("print POST-------------->>>>", request.POST)
             try:
                 with transaction.atomic():
                     student = form.save(commit=False)
@@ -186,11 +186,13 @@ def create(request):
                 print("Error encountered")
             
             return redirect('myprint:list')
-    context = {'form' : form,'formset' : formset}
+    # context = {'form' : form,'formset' : formset}
+    context['form'] = form
+    context['formset'] = formset
     return render(request, 'multi_forms/create.html', context=context)
 
 def list(request):
-    datas = Customer.objects.all()
+    datas = OrderForm.objects.all()
     context = {'datas' : datas}
     return render(request, 'multi_forms/list.html', context=context)
 

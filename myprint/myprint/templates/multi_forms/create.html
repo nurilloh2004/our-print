@@ -4,11 +4,12 @@
 {% block content %}
 	<form method="POST">
 		{% csrf_token %}
+		{{form}}
 		
 		<table class="table form-table table-bordered table-sm">
                             <thead class="text-center">
                                 <tr>
-                                    <th  class="font-weight-bold">ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
+                                    <th class="font-weight-bold">ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
                                     <th class="font-weight-bold">Имя <br> ЗАКАЗЧИКА</th>
                                     <th class="font-weight-bold">Номер <br> ТЕЛЕФОНА</th>
                                     <th class="font-weight-bold">ОТВЕТСВЕННЫЙ <br> Менеджер</th>
@@ -16,14 +17,7 @@
                                     <th class="font-weight-bold">ДАТА ОТГРУЗКИ ЗАКАЗА</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <th scope="row">{{form}}</th>
-                                    </td>
-                                </tr>
-                            </tbody>
-                                
+                            
                             <br>
                             <br>
                             <br>
