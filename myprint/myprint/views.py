@@ -167,16 +167,20 @@ def create(request):
     OrdersFormset = modelformset_factory(OrderForm, form=OrdersForm)
     form = CustomerForm(request.POST or None)
     formset = OrdersFormset(request.POST or None, queryset=OrderForm.objects.none(), prefix='orders')
+    
     if request.method == "POST":
         if form.is_valid() and formset.is_valid():
+            print("print POST-------------->>>>", request.method)
             try:
                 with transaction.atomic():
                     student = form.save(commit=False)
+                    
                     student.save()
 
                     for order in formset:
                         data = order.save(commit=False)
                         data.student = student
+                        print("print POST-------------->>>>", data)
                         data.save()
             except IntegrityError:
                 print("Error encountered")
@@ -189,6 +193,10 @@ def list(request):
     datas = Customer.objects.all()
     context = {'datas' : datas}
     return render(request, 'multi_forms/list.html', context=context)
+
+
+
+
 
 
 class Home(TemplateView):
