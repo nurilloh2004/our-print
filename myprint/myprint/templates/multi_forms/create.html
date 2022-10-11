@@ -4,12 +4,11 @@
 {% block content %}
 	<form method="POST">
 		{% csrf_token %}
-		{{ form}}
 		
 		<table class="table form-table table-bordered table-sm">
                             <thead class="text-center">
                                 <tr>
-                                    <th class="font-weight-bold">ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
+                                    <th  class="font-weight-bold">ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
                                     <th class="font-weight-bold">Имя <br> ЗАКАЗЧИКА</th>
                                     <th class="font-weight-bold">Номер <br> ТЕЛЕФОНА</th>
                                     <th class="font-weight-bold">ОТВЕТСВЕННЫЙ <br> Менеджер</th>
@@ -18,35 +17,60 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr>
+                                    <td>
+                                        <th scope="row">{{form}}</th>
+                                    </td>
+                                </tr>
+                            </tbody>
+                                
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            
+                            <br>
+                            <tbody>
                             {% for form_data in formset %}
                                 <tr class="item">
                                     <td>
+                                        <label>Id</label>
                                         {{ form_data.id }}
                                     </td>
                                     <td>
+                                        <label>Name</label>
                                         {{ form_data.name }}
                                     </td>
                                     <td>
+                                        <label>Select</label>
                                     	<select class="p-2" name="" id="">
                                             <option class="small p-2" selected value="шт">{{form_data.status_order}}</option>
                                         </select>
                                     </td>
                                     <td>
+                                        <label>Amount</label>
                                     	{{ form_data.amount }}
                                     </td>
                                     <td>
+                                        <label>Price</label>
                                     	{{ form_data.price }}
                                     </td>
                                     <td>
+                                        <label>Wtihout Price VAT</label>
                                     	{{ form_data.price_free_VAT }}
                                     </td>
                                     <td>
+                                        <label>VAT</label>
                                     	{{ form_data.VAT }}
                                     </td>
                                     <td>
+                                        <label>Price VAT</label>
                                     	{{ form_data.price_with_VAT }}
                                     </td>
-                                    <td>
+                                    <td><label>Total</label>
+
                                     	{{ form_data.total }}
                                     </td>
                                     <td>
