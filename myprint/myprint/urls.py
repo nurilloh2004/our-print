@@ -19,8 +19,8 @@ urlpatterns = [
     path('textile_products/', textile_products, name='textile_products'),
     path('advertisement/', advertisement, name='advertisement'),
     path('invoice/', invoice, name='invoice'),
-    path('application_order/', test_form, name='application_order'),
-    # path('test_form/', test_form, name='test_form'),
+    # path('application_order/', test_form, name='application_order'),
+    path('all/', Home.as_view(), name='all'),
     path('create/', create, name="create"),
     path('list/', list, name="list"),
 

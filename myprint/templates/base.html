@@ -111,7 +111,9 @@
 					  <li><a href="{% url 'myprint:portfolio' %}">НАШИ РАБОТЫ</a></li>
 					  <li><a href="{% url 'myprint:contact' %}">КОНТАКТЫ</a></li>
 					  <li><a href="{% url 'myprint:invoice' %}">INVOICE</a></li>
-					  <li><a href="{% url 'myprint:application_order'%}">application_order</a></li>
+					  {% comment %} <li><a href="{% url 'myprint:application_order'%}">application_order</a></li> {% endcomment %}
+					  <li><a href="{% url 'myprint:create'%}">Create</a></li>
+					  <li><a href="{% url 'myprint:list'%}">List</a></li>
 					  
 				  </ul>
 										
@@ -127,9 +129,8 @@
 </header> 
 
 
-{% block content %}
+{% block content %}{% endblock content %}
 
-{% endblock content %}
 
 
 <footer class="container-fluid pl-0 pr-0 pt-5 border-top">		
@@ -248,6 +249,7 @@ function consoleText(words, id, colors) {
  }, 200)
 }
 </script>
+{% block extra_script %}{% endblock %}
 </body>
 
 <!-- Mirrored from myprint.uz/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 03 Oct 2022 05:21:00 GMT -->

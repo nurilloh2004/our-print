@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, CreateView
 from django.forms import modelformset_factory
 from django.db import transaction, IntegrityError
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def home(request):
@@ -86,7 +87,7 @@ class OrderCreateView(CreateView):
 
 
 
-from django.views.decorators.csrf import csrf_exempt
+
 # @csrf_exempt
 # def test_form(request):
 #     form = OrderMForm()
@@ -98,18 +99,18 @@ from django.views.decorators.csrf import csrf_exempt
 #     return render(request, "main/testform.html", context)
 
 
-@csrf_exempt
-def test_form(request):
-    detail = OrderForm.objects.all()
-    form = OrderMForm()
-    if request.method == 'POST':
-        form = OrderMForm(request.POST)
-        if form.is_valid():
-            form.save()
-    context = {"form": form,
-                "detail": detail
-                    }
-    return render(request, "main/application_order.html", context)
+# @csrf_exempt
+# def test_form(request):
+#     detail = OrderForm.objects.all()
+#     form = OrderMForm()
+#     if request.method == 'POST':
+#         form = OrderMForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     context = {"form": form,
+#                 "detail": detail
+#                     }
+#     return render(request, "main/application_order.html", context)
 
 
 
@@ -162,34 +163,33 @@ def listView(request):
 
 @csrf_exempt
 def create(request):
-	context = {}
-	MarksFormset = modelformset_factory(OrderForm, form=OrdersForm)	
-	form = CustomerForm(request.POST or None)
-	formset = MarksFormset(request.POST or None, queryset= OrderForm.objects.none(), prefix='orders')
-	if request.method == "POST":
-		if form.is_valid() and formset.is_valid():
-			try:
-				with transaction.atomic():
-					student = form.save(commit=False)
-					student.save()
+    context = {}
+    OrdersFormset = modelformset_factory(OrderForm, form=OrdersForm)
+    form = CustomerForm(request.POST or None)
+    formset = OrdersFormset(request.POST or None, queryset=OrderForm.objects.none(), prefix='orders')
+    if request.method == "POST":
+        if form.is_valid() and formset.is_valid():
+            try:
+                with transaction.atomic():
+                    student = form.save(commit=False)
+                    student.save()
 
-					for mark in formset:
-						data = mark.save(commit=False)
-						data.student = student
-						data.save()
-			except IntegrityError:
-				print("Error Encountered")
+                    for order in formset:
+                        data = order.save(commit=False)
+                        data.student = student
+                        data.save()
+            except IntegrityError:
+                print("Error encountered")
+            
+            return redirect('myprint:list')
+    context = {'form' : form,'formset' : formset}
+    return render(request, 'multi_forms/create.html', context=context)
 
-			return redirect('formset:list')
-
-
-	context['formset'] = formset
-	context['form'] = form
-	return render(request, 'multi_forms/create.html', context)
-
-
-
-@csrf_exempt
 def list(request):
-	datas = Customer.objects.all()
-	return render(request, 'multi_forms/list.html', {'datas':datas})
+    datas = Customer.objects.all()
+    context = {'datas' : datas}
+    return render(request, 'multi_forms/list.html', context=context)
+
+
+class Home(TemplateView):
+    template_name = 'all.html'
