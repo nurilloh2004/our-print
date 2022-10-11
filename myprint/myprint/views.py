@@ -1,5 +1,16 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from multiprocessing import context
+from django.shortcuts import render, redirect
+from django.views.generic import (TemplateView, ListView, CreateView, DetailView, FormView)
+from django.contrib import messages
+from django.urls import reverse
+from django.views.generic.detail import SingleObjectMixin
+from django.http import HttpResponseRedirect
 from .models import *
+from .forms import *
+from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView, CreateView
+from django.forms import modelformset_factory
+from django.db import transaction, IntegrityError
 # Create your views here.
 
 def home(request):
@@ -45,13 +56,140 @@ def invoice(request):
     return render(request, 'main/invoice.html')
 
 def application_order(request):
-    return render(request, 'main/application_order.html')
+    orders = OrderForm.objects.all()
+    form = OrderMForm()
+    if request.method == "POST":
+        form = OrderMForm
+
+    context = {'orders' : orders, 'form' : form}
+    return render(request, 'main/application_order.html', context=context)
+
+
+class OrderCreateView(CreateView):
+    queryset = OrderForm()
+    template_name = 'application_order.html'
+    fields = '__all__'
+    success_url = '/application_order'
+
+# def get_name(request):
+#     if request.method == 'POST':
+#         form = OrderMForm(request.POST)
+#         if form.is_valid():
+            
+#             return HttpResponseRedirect('/thanks/')
+
+#     # if a GET (or any other method) we'll create a blank form
+#     else:
+#         form = NameForm()
+
+#     return render(request, 'name.html', {'form': form})
 
 
 
-def create_order_form(request):
-    form = OrderForm()  
-    context = {
-        "form": form
-    }
+from django.views.decorators.csrf import csrf_exempt
+# @csrf_exempt
+# def test_form(request):
+#     form = OrderMForm()
+#     if request.method == 'POST':
+#         form = OrderMForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#     context = {"form": form}
+#     return render(request, "main/testform.html", context)
+
+
+@csrf_exempt
+def test_form(request):
+    detail = OrderForm.objects.all()
+    form = OrderMForm()
+    if request.method == 'POST':
+        form = OrderMForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {"form": form,
+                "detail": detail
+                    }
     return render(request, "main/application_order.html", context)
+
+
+
+
+# def order(request):
+#     if request.method == "POST":
+#         form = OrderMForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return render(request, 'Reddit_app/order_thankyou.html')
+#     else:
+#         form = OrderMForm()
+#     return render(request, 'Reddit_app/order_from_post.html', {"form": form})
+
+
+
+@login_required(login_url='login')
+def listView(request):
+    if request.user.is_authenticated:
+        if OrderForm.objects.filter(manager=request.user.id):
+            orders = OrderForm.objects.filter(manager=request.user.id).order_by('-id').first()
+            total = 0
+            all_price = orders.price * orders.amount
+            percent_sum = (all_price / 100) * orders.VAT
+            sum_list = all_price + percent_sum
+            total = total + sum_list
+            context = {}
+
+            if orders.price1 and orders.percent1:
+                all_price1 = orders.price1 * orders.number1
+
+                percent_sum1 = (all_price1 / 100) * orders.percent1
+                sum_list1 = all_price1 + percent_sum1
+                total = total + sum_list1
+                context['all_price1'] = all_price1
+                context['sum_list1'] = sum_list1
+
+            context['orders'] = orders
+            context['sum_list'] = sum_list
+            context['all_price'] = all_price
+            context['total'] = total
+            if orders.VAT:
+                total = total + (total*orders.percent/100)
+                context['total_sum']=total
+        else:
+            context = {}
+        return render(request, 'invoice.html', context=context)
+
+
+
+
+def create(request):
+	context = {}
+	MarksFormset = modelformset_factory(OrderForm, form=OrdersForm)	
+	form = CustomerForm(request.POST or None)
+	formset = MarksFormset(request.POST or None, queryset= OrderForm.objects.none(), prefix='orders')
+	if request.method == "POST":
+		if form.is_valid() and formset.is_valid():
+			try:
+				with transaction.atomic():
+					student = form.save(commit=False)
+					student.save()
+
+					for mark in formset:
+						data = mark.save(commit=False)
+						data.student = student
+						data.save()
+			except IntegrityError:
+				print("Error Encountered")
+
+			return redirect('formset:list')
+
+
+	context['formset'] = formset
+	context['form'] = form
+	return render(request, 'multi_forms/create.html', context)
+
+
+
+
+def list(request):
+	datas = Customer.objects.all()
+	return render(request, 'multi_forms/list.html', {'datas':datas})

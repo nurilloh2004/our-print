@@ -209,20 +209,24 @@ class SocialMedia(models.Model):
 
 
 
-class Order(models.Model):
+class Customer(models.Model):
     id_name_order = models.CharField(max_length=300)
-    name_client = models.CharField(max_length=65)
+    client = models.CharField(max_length=65)
     client_phone_number = models.CharField(max_length=65)
     manager_name = models.CharField(max_length=65)
     date_order = models.DateTimeField()
     ready_product_date_order = models.DateTimeField()
 
 
-    def __str__(self) -> str:
-                return self.id_name_order
+    def __str__(self):
+        return self.client
+
+    class Meta:
+        db_table = 'customers'
 
 
 class OrderForm(models.Model):
+    student = models.ForeignKey(Customer, related_name = "orders", on_delete=models.CASCADE)
     Product_Status = (
         ('шт', 'шт'),
         ('усл', 'усл'),
@@ -236,12 +240,15 @@ class OrderForm(models.Model):
     price_with_VAT = models.PositiveIntegerField()
     total = models.PositiveIntegerField()    
     total_price_with_VAT = models.PositiveIntegerField()    
-    total_price_ALL = models.PositiveIntegerField()     
-    order = models.ForeignKey(Order, verbose_name='Zakazlar', on_delete=models.CASCADE)
+    total_price_ALL = models.PositiveIntegerField()
+    
     
 
     def __str__(self) -> str:
                 return self.name
+    
+    class Meta:
+        db_table = 'orders'
     
 
 

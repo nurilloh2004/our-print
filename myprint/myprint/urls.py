@@ -19,6 +19,9 @@ urlpatterns = [
     path('textile_products/', textile_products, name='textile_products'),
     path('advertisement/', advertisement, name='advertisement'),
     path('invoice/', invoice, name='invoice'),
-    path('application_order/', application_order, name='application_order'),
-    path('create_order_form/', create_order_form, name='create_order_form'),
+    path('application_order/', test_form, name='application_order'),
+    # path('test_form/', test_form, name='test_form'),
+    path('create/', create, name="create"),
+    path('list/', list, name="list"),
+
 ]

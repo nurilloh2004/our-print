@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+	<table>
+     <thead>
+        
+     </thead>   
+     <tbody>
+         {% for data in datas %}
+           <tr>
+            <td class="pt-3">{{i.id_name_order}}</td>
+            <td class="pt-5">{{i.name_client}}</td>
+            <td class="pt-5">{{i.client_phone_number}}</td>
+            <td class="pt-5">{{i.manager_name}}</td>
+            <td class="pt-5">{{i.date_order}}</td>
+            <td class="pt-5">{{i.ready_product_date_order}}</td>
+           </tr>
+         {% endfor %}
+     </tbody>
+    </table>
+	
+{% endblock %}

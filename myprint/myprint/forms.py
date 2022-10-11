@@ -1,34 +1,50 @@
+from dataclasses import fields
 from django import forms
-from django.forms.models import inlineformset_factory
+from django.forms import ModelForm
 
 from .models import *
 
+class CustomerForm(forms.ModelForm):
+	class Meta:
+		model = Customer
 
-class OrderForm(forms.ModelForm):
-    class Meta:
-        model = OrderForm
-        fields = (
-            'name',
-            'status_order',
+		fields = [
+			'id_name_order',
+			'client',
+			'client_phone_number',
+            'manager_name',
+            'date_order',
+            'ready_product_date_order',
+		]
+
+		labels = {
+			'name': 'Name',
+			'gender':'Gender',
+			'age':'Age',
+		}
+class OrdersForm(forms.ModelForm):
+	class Meta:
+		model = OrderForm
+
+		fields = [
+			'name',
+			'status_order',
             'amount',
             'price',
             'price_free_VAT',
             'VAT',
             'price_with_VAT',
             'total',
-            'total_price_with_VAT',
-            'total_price_ALL',
-        )
-#         labels = {
-#             'name': "Product"
-#         }
+		]
+
+		widgets = {
+			'name': forms.TextInput(attrs={'class': 'formset-field'}),
+			'status_order': forms.TextInput(attrs={'class': 'formset-field'}),
+			'price': forms.TextInput(attrs={'class': 'formset-field'}),
+            'price_free_VAT': forms.TextInput(attrs={'class': 'formset-field'}),
+            'VAT': forms.TextInput(attrs={'class': 'formset-field'}),
+            'price_with_VAT': forms.TextInput(attrs={'class': 'formset-field'}),
+            'total': forms.TextInput(attrs={'class': 'formset-field'}),
+		}
 
 
-OrderFormSet = inlineformset_factory(
-    Order,
-    OrderForm,
-    form=OrderForm,
-    min_num=2,  # minimum number of forms that must be filled in
-    extra=1,  # number of empty forms to display
-    can_delete=False  # show a checkbox in each form to delete the row
-)
