@@ -36,7 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email address', null=True, max_length=25)
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = ['first_name']
+    REQUIRED_FIELDS = []
 
     objects = MyUserManager()
 
@@ -53,11 +53,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = 'Managers'
 
     def __str__(self) -> str:
-        return self.full_name
+        return str(self.phone_number)
 
     def save(self, *args, **kwargs):
-        # password = self.password
-        # self.set_password(password)
+        password = self.password
+        self.set_password(password)
         return super(User,self).save(*args, **kwargs)
 
 #Banner
@@ -214,8 +214,8 @@ class Customer(models.Model):
     client = models.CharField(max_length=65)
     client_phone_number = models.CharField(max_length=65)
     manager_name = models.CharField(max_length=65)
-    date_order = models.DateTimeField()
-    ready_product_date_order = models.DateTimeField()
+    date_order = models.DateTimeField(auto_now_add=False)
+    ready_product_date_order = models.DateTimeField(auto_now_add=False)
 
 
     def __str__(self):
@@ -231,18 +231,26 @@ class OrderForm(models.Model):
         ('шт', 'шт'),
         ('усл', 'усл'),
     )
-    name = models.CharField(max_length=65)
+    name = models.CharField(max_length=65, blank=True, null=True)
     status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
-    amount = models.IntegerField()
-    price = models.PositiveIntegerField()
-    price_free_VAT = models.PositiveIntegerField()
-    VAT = models.FloatField()
-    price_with_VAT = models.PositiveIntegerField()
-    total = models.PositiveIntegerField()    
-    total_price_with_VAT = models.PositiveIntegerField()    
-    total_price_ALL = models.PositiveIntegerField()
+    amount = models.IntegerField(blank=True, null=True)
+    price = models.PositiveIntegerField(blank=True, null=True)
+    price_free_VAT = models.PositiveIntegerField(blank=True, null=True)
+    VAT = models.FloatField(blank=True, null=True)
+    price_with_VAT = models.PositiveIntegerField(blank=True, null=True)
+    total = models.PositiveIntegerField(blank=True, null=True)    
+    total_price_with_VAT = models.PositiveIntegerField(blank=True, null=True)    
+    total_price_ALL = models.PositiveIntegerField(blank=True, null=True)
     
-    
+    @property
+    def total_sum(self):
+        summ = self.price * self.amount
+        return summ
+    @property
+    def total_sum_wit_nds(self):
+        total_summ_with_nds = (self.total_sum)/100 * self.VAT + self.total_sum
+        return total_summ_with_nds
+
 
     def __str__(self) -> str:
                 return self.name

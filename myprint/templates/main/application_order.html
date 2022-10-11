@@ -166,22 +166,22 @@
               {% csrf_token %}
               <div class="row">
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="ID-№" aria-label="ID-№">
+                    <input name="id_name_order" type="text" class="form-control" placeholder="ID-№" aria-label="ID-№">
                   </div>
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="Имя ЗАКАЗЧИКА" aria-label="Имя ЗАКАЗЧИКА">
+                    <input name="client" type="text" class="form-control" placeholder="Имя ЗАКАЗЧИКА" aria-label="Имя ЗАКАЗЧИКА">
                   </div>
                   <div class="col">
-                      <input type="text" class="form-control" placeholder="Номер ТЕЛЕФОНА" aria-label="Номер ТЕЛЕФОНА">
+                      <input name="client_phone_number" type="text" class="form-control" placeholder="Номер ТЕЛЕФОНА" aria-label="Номер ТЕЛЕФОНА">
+                  </div>
+                    <div class="col">
+                      <input name="manager_name" type="text" class="form-control" placeholder="ОТВЕТСВЕННЫЙ Менеджер" aria-label="ОТВЕТСВЕННЫЙ Менеджер">
                     </div>
                     <div class="col">
-                      <input type="text" class="form-control" placeholder="ОТВЕТСВЕННЫЙ Менеджер" aria-label="ОТВЕТСВЕННЫЙ Менеджер">
+                      <input name="date_order" type="date" class="form-control" placeholder="ДАТА ПРИЕМА ЗАКАЗА " aria-label="ДАТА ПРИЕМА ЗАКАЗА ">
                     </div>
                     <div class="col">
-                      <input type="date" class="form-control" placeholder="ДАТА ПРИЕМА ЗАКАЗА " aria-label="ДАТА ПРИЕМА ЗАКАЗА ">
-                    </div>
-                    <div class="col">
-                      <input type="date" class="form-control" placeholder="ДАТА ОТГРУЗКИ ЗАКАЗА" aria-label="ДАТА ОТГРУЗКИ ЗАКАЗА">
+                      <input name="ready_product_date_order" type="date" class="form-control" placeholder="ДАТА ОТГРУЗКИ ЗАКАЗА" aria-label="ДАТА ОТГРУЗКИ ЗАКАЗА">
                     </div>
                 </div>
                 <br>

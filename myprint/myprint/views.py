@@ -15,7 +15,9 @@ from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def home(request):
+    print(" ppp ---------->>>>>",request.user)
     return render(request, 'main/index.html')
+    
 
 def contact(request):
     return render(request, 'main/contact.html')
@@ -139,15 +141,6 @@ def listView(request):
             total = total + sum_list
             context = {}
 
-            if orders.price1 and orders.percent1:
-                all_price1 = orders.price1 * orders.number1
-
-                percent_sum1 = (all_price1 / 100) * orders.percent1
-                sum_list1 = all_price1 + percent_sum1
-                total = total + sum_list1
-                context['all_price1'] = all_price1
-                context['sum_list1'] = sum_list1
-
             context['orders'] = orders
             context['sum_list'] = sum_list
             context['all_price'] = all_price
@@ -162,10 +155,13 @@ def listView(request):
 
 
 @csrf_exempt
-def create(request):
+def createView(request):
     context = {}
+    print("ppppp -------------->>>>>", request.POST)
     OrdersFormset = modelformset_factory(OrderForm, form=OrdersForm)
+    print("order form set", OrdersFormset)
     form = CustomerForm(request.POST or None)
+    
     formset = OrdersFormset(request.POST or None, queryset=OrderForm.objects.none(), prefix='orders')
     
     if request.method == "POST":
@@ -174,7 +170,6 @@ def create(request):
             try:
                 with transaction.atomic():
                     student = form.save(commit=False)
-                    
                     student.save()
 
                     for order in formset:
@@ -186,7 +181,6 @@ def create(request):
                 print("Error encountered")
             
             return redirect('myprint:list')
-    # context = {'form' : form,'formset' : formset}
     context['form'] = form
     context['formset'] = formset
     return render(request, 'multi_forms/create.html', context=context)

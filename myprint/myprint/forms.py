@@ -17,11 +17,6 @@ class CustomerForm(forms.ModelForm):
             'ready_product_date_order',
 		]
 
-		labels = {
-			'name': 'Name',
-			'gender':'Gender',
-			'age':'Age',
-		}
 class OrdersForm(forms.ModelForm):
 	class Meta:
 		model = OrderForm

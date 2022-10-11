@@ -4,7 +4,7 @@
 {% block content %}
 	<form method="POST">
 		{% csrf_token %}
-		{{form}}
+		
 		
 		<table class="table form-table table-bordered table-sm">
                             <thead class="text-center">
@@ -17,7 +17,29 @@
                                     <th class="font-weight-bold">ДАТА ОТГРУЗКИ ЗАКАЗА</th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input name="id_name_order" type="text" class="form-control" placeholder="ID-№" aria-label="ID-№">
+                                    </td>
+                                    <td>
+                                        <input name="client" type="text" class="form-control" placeholder="ID-№" aria-label="ID-№">
+                                    </td>
+                                    <td>
+                                        <input name="client_phone_number" type="text" class="form-control" placeholder="ID-№" aria-label="ID-№">
+                                    </td>
+                                    <td>
+                                        <input name="manager_name" type="text" class="form-control" placeholder="ID-№" aria-label="ID-№">
+                                    </td>
+                                    <td>
+                                        <input name="date_order" type="date" class="form-control" placeholder="ID-№" aria-label="ID-№">
+                                    </td>
+                                    <td>
+                                        <input name="ready_product_date_order" type="date" class="form-control" placeholder="ДАТА ОТГРУЗКИ ЗАКАЗА" aria-label="ДАТА ОТГРУЗКИ ЗАКАЗА">
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
                             <br>
                             <br>
                             <br>

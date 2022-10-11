@@ -112,9 +112,10 @@
 					  <li><a href="{% url 'myprint:contact' %}">КОНТАКТЫ</a></li>
 					  <li><a href="{% url 'myprint:invoice' %}">INVOICE</a></li>
 					  {% comment %} <li><a href="{% url 'myprint:application_order'%}">application_order</a></li> {% endcomment %}
+					  {% if request.user.is_authenticated %}
 					  <li><a href="{% url 'myprint:create'%}">Create</a></li>
 					  <li><a href="{% url 'myprint:list'%}">List</a></li>
-					  
+					  {% endif %}
 				  </ul>
 										
 									</div>
