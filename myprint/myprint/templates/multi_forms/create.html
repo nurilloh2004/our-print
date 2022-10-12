@@ -5,8 +5,8 @@
 	<form method="POST">
 		{% csrf_token %}
 		
-		
-		<table class="table form-table table-bordered table-sm">
+		<div class='container'>
+		    <table class="table form-table table-bordered table-sm">
                             <thead class="text-center">
                                 <tr>
                                     <th class="font-weight-bold">ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
@@ -49,69 +49,51 @@
                             
                             <br>
                             <tbody>
-                            {% for form_data in formset %}
-                                <tr class="item">
-                                    <td>
-                                        <label>Id</label>
-                                        {{ form_data.id }}
-                                    </td>
-                                    <td>
-                                        <label>Name</label>
-                                        {{ form_data.name }}
-                                    </td>
-                                    <td>
-                                        <label>Select</label>
-                                    	<select class="p-2" name="" id="">
-                                            <option class="small p-2" selected value="шт">{{form_data.status_order}}</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <label>Amount</label>
-                                    	{{ form_data.amount }}
-                                    </td>
-                                    <td>
-                                        <label>Price</label>
-                                    	{{ form_data.price }}
-                                    </td>
-                                    <td>
-                                        <label>Wtihout Price VAT</label>
-                                    	{{ form_data.price_free_VAT }}
-                                    </td>
-                                    <td>
-                                        <label>VAT</label>
-                                    	{{ form_data.VAT }}
-                                    </td>
-                                    <td>
-                                        <label>Price VAT</label>
-                                    	{{ form_data.price_with_VAT }}
-                                    </td>
-                                    <td><label>Total</label>
 
-                                    	{{ form_data.total }}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger btn-sm remove-form-row"
-                                                id="{{ formset.prefix }}">
-                                          
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td colspan="9"
-                                    style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
-                                    <button type="button" class="btn btn-sm btn-success add-form-row"
-                                            id="{{ formset.prefix }}">
-                                       Add
-                                    </button>
-                                </td>
-                            </tr>
-                            </tbody>
+            <table class="table form-table table-bordered table-sm">
+
+                            <thead class="text-center">
+                                        <tr>
+                                            <th class="font-weight-bold">Наименование работ,услуг,изделий</span></th>
+                                            <th class="font-weight-bold">Ед.изм.</th>
+                                            <th class="font-weight-bold">Кол-во</th>
+                                            <th class="font-weight-bold">Цена за единицу</th>
+                                            <th class="font-weight-bold">Цена без учета НДС</th>
+                                            <th class="font-weight-bold">НДС</th>
+                                        </tr>
+                            </thead>
+                            <tbody>
+                                        {% for form_data in formset %}
+                                        <tr class="item">
+                                            <td>{{ form_data.name}}</td>
+                                            <td>{{ form_data.status_order }}</td>
+                                            <td>{{ form_data.amount }}</td>
+                                            <td>{{ form_data.price }}</td>
+                                            <td>{{ form_data.price_free_VAT }}</td>
+                                            <td>{{ form_data.VAT }}</td>
+                                            <td>
+                                            <button type="button" class="btn btn-danger btn-sm remove-form-row"
+                                                    id="{{ formset.prefix }}">
+                                                Delete
+                                            </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tr>
+                                        <td colspan="9"
+                                            style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+                                            <button type="button" class="btn btn-sm btn-success add-form-row"
+                                                    id="{{ formset.prefix }}">
+                                                Add
+                                            </button>
+                                        </td>
+                                    </tr>
                         </table>
                         {{ formset.management_form }}
 
-		<button type="submit">Submit</button>
+            </div>
+                        <button type="submit" class="btn btn-sm btn-success add-form-row">Submit</button>
 	</form>
 {% endblock %}
 {% block extra_script %}
