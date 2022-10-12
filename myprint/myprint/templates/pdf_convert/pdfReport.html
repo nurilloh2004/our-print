@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+
+<h1>Show Info</h1>
+        
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="font-weight-bold">Наименование работ,услуг,изделий</span></th>
+                            <th class="font-weight-bold">Ед.изм.</th>
+                            <th class="font-weight-bold">Кол-во</th>
+                            <th class="font-weight-bold">Цена за единицу</th>
+                            <th class="font-weight-bold">Цена без учета НДС</th>
+                            <th class="font-weight-bold">НДС</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                     {% for ord in order %}
+
+                        <tr class="item">
+                            <td>{{ ord.student.client }}</td>
+                            <td>{{ord.name}}</td>
+                            <td>{{ ord.status_order }}</td>
+                            <td>{{ ord.amount }}</td>
+                            <td>{{ ord.price }}</td>
+                            <td>{{ ord.price_free_VAT }}</td>
+                            <td>{{ ord.VAT }}</td>
+                            <td>{{ ord.total }}</td>
+                        </tr>
+
+                      {% endfor %}
+                      {% for ord in order %}
+                      <tr class="item">
+                        <td>{{ ord.total }}</td>
+                        <td>{{ ord.total_price_with_VAT }}</td>
+                        <td>{{ ord.total_price_ALL }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+
+            </div>
+        </div>
+    </div>
+    {% endblock content %}

@@ -4,10 +4,13 @@ from django.views.generic import (TemplateView, ListView, CreateView, DetailView
 from django.contrib import messages
 from django.urls import reverse
 from django.views.generic.detail import SingleObjectMixin
-from django.http import HttpResponseRedirectfrom, HttpResponse
+from django.http import HttpResponse
 from .models import *
 from .forms import *
-
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView, CreateView
 from django.forms import modelformset_factory
@@ -229,33 +232,27 @@ def user_login(request):
 
 
 
-def export_pdf(request):
+
+
+def pdf_report_create(request):
+    order = OrderForm.objects.all()
+
+    template_path = 'pdf_convert/pdfReport.html'
+
+    context = {'order': order}
+
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=Expenses' + \
-                                      str(datetime.datetime.now()) + '.pdf'
-    response['Content-Transfer-Encoding'] = 'binary'
-    orders = OrderModel.objects.filter(manager=request.user.id)
-    order_id_number = OrderModel.objects.all().last().id
-    percent_sum = []
-    for summa in orders:
-        percent_sum.append(summa.price * summa.percent / 100)
-    # total = orders.aggregate(money=Coalesce(Sum('price'), 0))['price'] * orders.number
-    all_price = []
-    for i in orders:
-        all_price.append(i.price * i.number)
-    sum_list = []
-    for (item1, item2) in zip(all_price, percent_sum):
-        sum_list.append(item1 + item2)
-    all_orders = zip(orders, all_price, percent_sum, sum_list)
-    html_string = render_to_string(
-        'expenses/pdf_output.html', {'expenses': all_orders, 'total': 0, 'order_number': order_id_number})
 
-    html = HTML(string=html_string)
-    result = html.write_pdf()
+    response['Content-Disposition'] = 'filename="orders_report.pdf"'
 
-    with tempfile.NamedTemporaryFile(delete=True) as output:
-        output.write(result)
-        output.flush()
-        output = open(output.name, 'rb')
-        response.write(output.read())
+    template = get_template(template_path)
+
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
