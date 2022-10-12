@@ -40,66 +40,59 @@
                                 </tr>
                                 
                             </tbody>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            <br>
-                            
-                            <br>
                             <tbody>
 
             <table class="table form-table table-bordered table-sm">
 
                             <thead class="text-center">
                                         <tr>
-                                            <th class="font-weight-bold">Наименование работ,услуг,изделий</span></th>
-                                            <th class="font-weight-bold">Ед.изм.</th>
-                                            <th class="font-weight-bold">Кол-во</th>
-                                            <th class="font-weight-bold">Цена за единицу</th>
-                                            <th class="font-weight-bold">Цена без учета НДС</th>
-                                            <th class="font-weight-bold">НДС</th>
+                                            <th scope='col'>Наименование работ,<\n>услуг,изделий</th>
+                                            <th scope='col'>Ед.изм.</th>
+                                            <th scope='col'>Кол-во</th>
+                                            <th scope='col'>Цена за единицу</th>
+                                            <th scope='col'>Цена без учета НДС</th>
+                                            <th scope='col'>НДС</th>
                                         </tr>
                             </thead>
                             <tbody>
-                                        {% for form_data in formset %}
-                                        <tr class="item">
-                                            <td>
-                                                <input name="form_data.name" type="text" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                                       value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    {{ form_data.status_order }}
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <input name="form_data.amount" type="number" class="form-control">
-                
-                                            </td>
-                                            <td>
-                                                <input name="form_data.price" type="number" class="form-control">
-                
-                                            </td>
-                                            <td>
-                                                <input name="form_data.price_free_VAT" type="number" class="form-control">
-                
-                                            </td>
-                                            <td>
-                                                <input name="form_data.VAT" type="number" class="form-control">
-                
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-sm remove-form-row"
-                                                        id="{{ formset.prefix }}">
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-                                    </tbody>
+                                {% for form_data in formset %}
+                                    <tr class="item">
+                                        <td>
+                                            <input name="form_data.name" type="text" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                                   value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                {{ form_data.status_order }}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input name="form_data.amount" type="number" class="form-control">
+            
+                                        </td>
+                                        <td>
+                                            <input name="form_data.price" type="number" class="form-control">
+            
+                                        </td>
+                                        <td>
+                                            <input name="form_data.price_free_VAT" type="number" class="form-control">
+            
+                                        </td>
+                                        <td>
+                                            <input name="form_data.VAT" type="number" class="form-control">
+            
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm remove-form-row"
+                                                    id="{{ formset.prefix }}">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+            
+                                {% endfor %}
+                                </tbody>
                                     <tr>
                                         <td colspan="9"
                                             style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
@@ -111,9 +104,8 @@
                                     </tr>
                         </table>
                         {{ formset.management_form }}
-
+                        <button type="submit">Submit</button>
             </div>
-                        <button type="submit" class="btn btn-sm btn-success add-form-row">Submit</button>
 	</form>
 {% endblock %}
 {% block extra_script %}

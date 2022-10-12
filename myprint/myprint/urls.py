@@ -22,7 +22,8 @@ urlpatterns = [
     # path('application_order/', test_form, name='application_order'),
     # path('all/', Home.as_view(), name='all'),
     path('create/', createView, name="create"),
-    path('list/', list, name="list"),
+    path('list/', listview, name="list"),
     path('user_login_view/', user_login, name='login'),
+    path('create-pdf/', pdf_report_create, name='create_pdf'),
 
 ]

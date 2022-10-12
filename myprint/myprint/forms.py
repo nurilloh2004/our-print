@@ -32,15 +32,6 @@ class OrdersForm(forms.ModelForm):
             'total',
 		]
 
-		widgets = {
-			'name': forms.TextInput(attrs={'class': 'formset-field'}),
-			'status_order': forms.TextInput(attrs={'class': 'formset-field'}),
-			'price': forms.NumberInput(attrs={'class': 'formset-field'}),
-            'price_free_VAT': forms.NumberInput(attrs={'class': 'formset-field'}),
-            'VAT': forms.NumberInput(attrs={'class': 'formset-field'}),
-            'price_with_VAT': forms.NumberInput(attrs={'class': 'formset-field'}),
-            'total': forms.NumberInput(attrs={'class': 'formset-field'}),
-		}
 
 
 

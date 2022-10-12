@@ -181,7 +181,6 @@ def createView(request):
                     for order in formset:
                         data = order.save(commit=False)
                         data.student = student
-                        print("print POST-------------->>>>", data)
                         data.save()
             except IntegrityError:
                 print("Error encountered")
@@ -191,9 +190,29 @@ def createView(request):
     context['formset'] = formset
     return render(request, 'multi_forms/create.html', context=context)
 
-def list(request):
-    datas = OrderForm.objects.all()
-    context = {'datas' : datas}
+
+
+
+
+
+def listview(request):
+    if request.user.is_authenticated:
+        if OrderForm.objects.filter(student=request.user.id):
+            orders = OrderForm.objects.filter(student=request.user.id).order_by('-id').first()
+            total = 0
+            all_price = orders.price * orders.amount
+            percent_sum = (all_price / 100) * orders.VAT
+            sum_list = all_price + percent_sum
+            total = total + sum_list
+            context = {}
+            context['orders'] = orders
+            context['sum_list'] = sum_list
+            context['all_price'] = all_price
+            context['total'] = total
+            if orders.VAT:
+                total = total + (total*orders.VAT/100)
+                context['total_sum']=total
+        
     return render(request, 'multi_forms/list.html', context=context)
 
 
