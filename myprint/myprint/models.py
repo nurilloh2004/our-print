@@ -1,3 +1,4 @@
+from tkinter import CASCADE
 from django.utils.translation import gettext_lazy as _
 from unicodedata import category
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
@@ -36,7 +37,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email address', null=True, max_length=25)
 
     USERNAME_FIELD = 'phone_number'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['first_name']
 
     objects = MyUserManager()
 
@@ -213,7 +214,7 @@ class Customer(models.Model):
     id_name_order = models.CharField(max_length=300)
     client = models.CharField(max_length=65)
     client_phone_number = models.CharField(max_length=65)
-    manager_name = models.CharField(max_length=65)
+    manager_name = models.ForeignKey(User, on_delete=models.CASCADE)
     date_order = models.DateTimeField(auto_now_add=False)
     ready_product_date_order = models.DateTimeField(auto_now_add=False)
 
@@ -235,7 +236,7 @@ class OrderForm(models.Model):
     status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
     amount = models.IntegerField(blank=True, null=True)
     price = models.PositiveIntegerField(blank=True, null=True)
-    price_free_VAT = models.PositiveIntegerField(blank=True, null=True)
+    price_without_VAT = models.PositiveIntegerField(blank=True, null=True)
     VAT = models.FloatField(blank=True, null=True)
     price_with_VAT = models.PositiveIntegerField(blank=True, null=True)
     total = models.PositiveIntegerField(blank=True, null=True)    
@@ -243,13 +244,23 @@ class OrderForm(models.Model):
     total_price_ALL = models.PositiveIntegerField(blank=True, null=True)
     
     @property
-    def total_sum(self):
-        summ = self.price * self.amount
-        return summ
+    def price_without_VAT(self):
+        price_without_VAT = self.price * self.amount
+        return price_without_VAT
+
     @property
-    def total_sum_wit_nds(self):
-        total_summ_with_nds = (self.total_sum)/100 * self.VAT + self.total_sum
-        return total_summ_with_nds
+    def total(self):
+        totall = self.price_without_VAT / 100
+        total1 = totall * self.VAT
+        total = total1 + self.price_without_VAT
+        return total
+
+    @property
+    def price_with_VAT(self):
+        price_with_VAT = (self.price_without_VAT)/100 * self.VAT + self.price_without_VAT
+        return price_with_VAT
+    
+    
 
 
     def __str__(self) -> str:

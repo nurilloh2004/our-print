@@ -64,15 +64,6 @@ def advertisement(request):
 def invoice(request):
     return render(request, 'main/invoice.html')
 
-# def application_order(request):
-#     orders = OrderForm.objects.all()
-#     form = OrderMForm()
-#     if request.method == "POST":
-#         form = OrderMForm
-
-#     context = {'orders' : orders, 'form' : form}
-#     return render(request, 'main/application_order.html', context=context)
-
 
 class OrderCreateView(CreateView):
     queryset = OrderForm()
@@ -80,83 +71,23 @@ class OrderCreateView(CreateView):
     fields = '__all__'
     success_url = '/application_order'
 
-# def get_name(request):
-#     if request.method == 'POST':
-#         form = OrderMForm(request.POST)
-#         if form.is_valid():
-            
-#             return HttpResponseRedirect('/thanks/')
-
-#     # if a GET (or any other method) we'll create a blank form
-#     else:
-#         form = NameForm()
-
-#     return render(request, 'name.html', {'form': form})
 
 
 
 
-# @csrf_exempt
-# def test_form(request):
-#     form = OrderMForm()
-#     if request.method == 'POST':
-#         form = OrderMForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#     context = {"form": form}
-#     return render(request, "main/testform.html", context)
-
-
-# @csrf_exempt
-# def test_form(request):
-#     detail = OrderForm.objects.all()
-#     form = OrderMForm()
-#     if request.method == 'POST':
-#         form = OrderMForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#     context = {"form": form,
-#                 "detail": detail
-#                     }
-#     return render(request, "main/application_order.html", context)
 
 
 
 
-# def order(request):
-#     if request.method == "POST":
-#         form = OrderMForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return render(request, 'Reddit_app/order_thankyou.html')
-#     else:
-#         form = OrderMForm()
-#     return render(request, 'Reddit_app/order_from_post.html', {"form": form})
 
 
-@csrf_exempt
-@login_required(login_url='login')
-def listView(request):
-    if request.user.is_authenticated:
-        if OrderForm.objects.filter(manager=request.user.id):
-            orders = OrderForm.objects.filter(manager=request.user.id).order_by('-id').first()
-            total = 0
-            all_price = orders.price * orders.amount
-            percent_sum = (all_price / 100) * orders.VAT
-            sum_list = all_price + percent_sum
-            total = total + sum_list
-            context = {}
 
-            context['orders'] = orders
-            context['sum_list'] = sum_list
-            context['all_price'] = all_price
-            context['total'] = total
-            if orders.VAT:
-                total = total + (total*orders.percent/100)
-                context['total_sum']=total
-        else:
-            context = {}
-        return render(request, 'invoice.html', context=context)
+
+def listview(request):
+    datas = OrderForm.objects.all()
+    dataform = Customer.objects.all()
+    context = {'datas' : datas,'dataform' : dataform}
+    return render(request, 'multi_forms/list.html', context=context)
 
 
 
@@ -195,25 +126,24 @@ def createView(request):
 
 
 
-def listview(request):
-    if request.user.is_authenticated:
-        if OrderForm.objects.filter(student=request.user.id):
-            orders = OrderForm.objects.filter(student=request.user.id).order_by('-id').first()
-            total = 0
-            all_price = orders.price * orders.amount
-            percent_sum = (all_price / 100) * orders.VAT
-            sum_list = all_price + percent_sum
-            total = total + sum_list
-            context = {}
-            context['orders'] = orders
-            context['sum_list'] = sum_list
-            context['all_price'] = all_price
-            context['total'] = total
-            if orders.VAT:
-                total = total + (total*orders.VAT/100)
-                context['total_sum']=total
+# def listview(request):
+    
+#     orders = OrderForm.objects.filter(manager=request.user.id).order_by('-id').first()
+#     total = 0
+#     all_price = orders.price * orders.amount
+#     percent_sum = (all_price / 100) * orders.VAT
+#     sum_list = all_price + percent_sum
+#     total = total + sum_list
+#     context = {}
+#     context['orders'] = orders
+#     context['sum_list'] = sum_list
+#     context['all_price'] = all_price
+#     context['total'] = total
+#     if orders.VAT:
+#         total = total + (total*orders.VAT/100)
+#         context['total_sum']=total
         
-    return render(request, 'multi_forms/list.html', context=context)
+#     return render(request, 'multi_forms/list.html', context=context)
 
 
 
@@ -247,7 +177,7 @@ def user_login(request):
                 print("login ---> ", auth_login)
                 return  render(request, 'main/success.html')
             else:
-                return render(request, template_name='accounts/error.html', context={'login': auth_login})
+                return render(request, template_name='main/error.html', context={'login': auth_login})
 
 
 

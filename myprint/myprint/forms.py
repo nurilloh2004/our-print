@@ -26,10 +26,7 @@ class OrdersForm(forms.ModelForm):
 			'status_order',
             'amount',
             'price',
-            'price_free_VAT',
             'VAT',
-            'price_with_VAT',
-            'total',
 		]
 
 

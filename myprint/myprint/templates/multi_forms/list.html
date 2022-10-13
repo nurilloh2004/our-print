@@ -4,18 +4,20 @@
 {% block content %}
 	<table>
      <thead>
-        
+        <tr>
+          <th scope='col'>Client</th>
+          <th scope='col'>Наименование работ</th>
+          <th scope='col'>Ед.изм.</th>
+          <th scope='col'>Кол-во</th>
+          <th scope='col'>Цена за единицу</th>
+          <th scope='col'>Price without HDC</th>
+          <th scope='col'>НДС</th>
+          <th scope='col'>Price with HDC</th>
+          <th scope='col'>TOTAL</th>
+        </tr>
      </thead>   
      <tbody>
-
-          <tr>
-            <td class="pt-3">{{datas.student.id_name_order}}</td>
-            <td class="pt-3">{{datas.student.client}}</td>
-            <td class="pt-5">{{datas.student.client_phone_number}}</td>
-            <td class="pt-5">{{datas.student.manager_name}}</td>
-            <td class="pt-5">{{datas.student.date_order}}</td>
-            <td class="pt-5">{{datas.student.ready_product_date_order}}</td>
-          </tr>
+          
          {% for data in datas %}
             
            <tr>
@@ -24,12 +26,10 @@
             <td class="pt-5">{{data.status_order}}</td>
             <td class="pt-5">{{data.amount}}</td>
             <td class="pt-5">{{data.price}}</td>
-            <td class="pt-5">{{data.price_free_VAT}}</td>
+            <td class="pt-5">{{data.price_without_VAT}}</td>
             <td class="pt-5">{{data.VAT}}</td>
             <td class="pt-5">{{data.price_with_VAT}}</td>
-            <td class="pt-5">{{data.price_with_VAT}}</td>
             <td class="pt-5">{{data.total}}</td>
-            <td class="pt-5">{{data.total_price_with_VAT}}</td>
            </tr>
          {% endfor %}
      </tbody>
