@@ -92,27 +92,59 @@ def listview(request):
 
 
 @csrf_exempt
-def create(request):
+def createView(request):
     context = {}
-    OrdersFormSet = modelformset_factory(OrderForm, form=OrdersForm)
+    print("ppppp -------------->>>>>", request.POST)
+    OrdersFormset = modelformset_factory(OrderForm, form=OrdersForm)
+    print("order form set", OrdersFormset)
     form = CustomerForm(request.POST or None)
-    formset = OrdersFormSet(request.POST or None, queryset=OrderForm.objects.none(), prefix='orders')
-    if request.method == 'POST':
+    
+    formset = OrdersFormset(request.POST or None, queryset=OrderForm.objects.none(), prefix='orders')
+    
+    if request.method == "POST":
         if form.is_valid() and formset.is_valid():
+            print("print POST-------------->>>>", request.POST)
             try:
                 with transaction.atomic():
-                    orders = form.save(commit=False)
-                    orders.save()
-                    for i in formset:
-                        data = i.save(commit=False)
-                        data.orders = orders
+                    student = form.save(commit=False)
+                    student.save()
+
+                    for order in formset:
+                        data = order.save(commit=False)
+                        data.student = student
                         data.save()
             except IntegrityError:
-                print("Xato------------------>>>>>>>>>>>")
-            return redirect("myprint:list")
-    context['formset'] = formset
+                print("Error encountered")
+            
+            return redirect('myprint:list')
     context['form'] = form
-    return render(request, "multi_forms/create.html", context=context)
+    context['formset'] = formset
+    return render(request, 'multi_forms/create.html', context=context)
+
+
+
+
+# def create(request):
+#     context = {}
+#     OrdersFormSet = modelformset_factory(OrderForm, form=OrdersForm)
+#     form = CustomerForm(request.POST or None)
+#     formset = OrdersFormSet(request.POST or None, queryset=OrderForm.objects.none(), prefix='orders')
+#     if request.method == 'POST':
+#         if form.is_valid() and formset.is_valid():
+#             try:
+#                 with transaction.atomic():
+#                     orders = form.save(commit=False)
+#                     orders.save()
+#                     for i in formset:
+#                         data = i.save(commit=False)
+#                         data.orders = orders
+#                         data.save()
+#             except IntegrityError:
+#                 print("Xato------------------>>>>>>>>>>>")
+#             return redirect("myprint:list")
+#     context['formset'] = formset
+#     context['form'] = form
+#     return render(request, "multi_forms/create.html", context=context)
 
 
 # def createView(request):

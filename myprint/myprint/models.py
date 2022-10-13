@@ -214,7 +214,6 @@ class Customer(models.Model):
     id_name_order = models.CharField(max_length=300)
     client = models.CharField(max_length=65)
     client_phone_number = models.CharField(max_length=65)
-    manager_name = models.ForeignKey(User, on_delete=models.CASCADE)
     date_order = models.DateTimeField(auto_now_add=False)
     ready_product_date_order = models.DateTimeField(auto_now_add=False)
 
@@ -245,7 +244,7 @@ class OrderForm(models.Model):
     
     @property
     def price_without_VAT(self):
-        price_without_VAT = self.price * self.amount
+        price_without_VAT = OrderForm.price * OrderForm.amount
         return price_without_VAT
 
     @property

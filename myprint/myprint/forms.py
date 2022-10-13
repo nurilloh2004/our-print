@@ -12,7 +12,6 @@ class CustomerForm(forms.ModelForm):
 			'id_name_order',
 			'client',
 			'client_phone_number',
-            'manager_name',
             'date_order',
             'ready_product_date_order',
 		]
