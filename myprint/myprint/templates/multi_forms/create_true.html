@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <table class="table form-table table-bordered table-sm">
+                <thead class="text-center">
+                <tr>
+                    <th>Zakazchi adresi</th>
+                    <th>Zakazchi nomi</th>
+                    <th>Telefon raqmi</th>
+                    <th>Masul Menejer</th>
+                    <th>BUYURTMA KUNI</th>
+                    <th>Buyurtmani yetkazib berish sanasi</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr>
+                    <td>
+                        <input name="id_name_order" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="name_client" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="client_phone_number" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="manager_name" type="text" class="form-control">
+                    </td>
+                    <td>
+                        <input name="date_order" type="date" class="form-control">
+                    </td>
+                    <td>
+                        <input name="ready_product_date_order" type="date" class="form-control">
+                    </td>
+                </tr>
+                <br>
+
+                </tbody>
+                <table class="table form-table table-bordered table-sm">
+                    <thead class="text-center">
+                    <tr>
+                        <th scope="col">Наименование работ,услуг,изделий</th>
+                        <th scope="col">Ед.изм.</th>
+                        <th scope="col">Кол-во</th>
+                        <th scope="col">Цена за единицу</th>
+                        <th scope="col">Цена без учета НДС</th>
+                        <th scope="col">НДС</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for form_data in formset %}
+                        <tr class="item">
+                            <td>
+                                <input name="form_data.name" type="text" class="form-control">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                       value="option1" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    {{ form_data.status_order }}
+                                </label>
+                            </td>
+                            <td>
+                                <input name="form_data.amount" type="number" class="form-control">
+
+                            </td>
+                            <td>
+                                <input name="form_data.price" type="number" class="form-control">
+
+                            </td>
+                            <td>
+                                <input name="form_data.price_free_VAT" type="number" class="form-control">
+
+                            </td>
+                            <td>
+                                <input name="form_data.VAT" type="number" class="form-control">
+
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm remove-form-row"
+                                        id="{{ formset.prefix }}">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <tr>
+                    <td colspan="9"
+                        style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+                        <button type="button" class="btn btn-sm btn-success add-form-row"
+                                id="{{ formset.prefix }}">
+                            Add
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        {{ formset.management_form }}
+
+        <button type="submit">Saqlash</button>
+    </form>
+
+{% endblock %}
+{% block extra_script %}
+    <script type="text/javascript" src="{% static 'js/formset.js' %}"></script>
+{% endblock %}

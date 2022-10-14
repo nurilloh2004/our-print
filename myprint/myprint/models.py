@@ -226,11 +226,11 @@ class Customer(models.Model):
 
 
 class OrderForm(models.Model):
-    student = models.ForeignKey(Customer, related_name = "orders", on_delete=models.CASCADE)
     Product_Status = (
         ('шт', 'шт'),
         ('усл', 'усл'),
     )
+    student = models.ForeignKey(Customer, related_name = "orders", on_delete=models.CASCADE)
     name = models.CharField(max_length=65, blank=True, null=True)
     status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
     amount = models.IntegerField(blank=True, null=True)

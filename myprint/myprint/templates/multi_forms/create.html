@@ -14,14 +14,14 @@
 		<div class='container'>
 		    <table class="table form-table table-bordered table-sm">
                             <thead class="text-center">
-                                <tr>
-                                    <th class="font-weight-bold">ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
-                                    <th class="font-weight-bold">Имя <br> ЗАКАЗЧИКА</th>
-                                    <th class="font-weight-bold">Номер <br> ТЕЛЕФОНА</th>
-                                    <th class="font-weight-bold">ОТВЕТСВЕННЫЙ <br> Менеджер</th>
-                                    <th class="font-weight-bold">ДАТА ПРИЕМА ЗАКАЗА</th>
-                                    <th class="font-weight-bold">ДАТА ОТГРУЗКИ ЗАКАЗА</th>
-                                </tr>
+                            <tr>
+                                <th>ID-№ <span>H_001 </span> <br> № Заказа <span> _ 1 _</span></th>
+                                <th>Имя <br> ЗАКАЗЧИКА</th>
+                                <th>Номер <br> ТЕЛЕФОНА</th>
+                                <th>ОТВЕТСВЕННЫЙ <br> Менеджер</th>
+                                <th>ДАТА ПРИЕМА ЗАКАЗА</th>
+                                <th>ДАТА ОТГРУЗКИ ЗАКАЗА</th>
+                            </tr>
                             </thead>
                             <tbody>
                                 <tr>
@@ -44,65 +44,56 @@
                                         <input name="ready_product_date_order" type="date" class="form-control" placeholder="ДАТА ОТГРУЗКИ ЗАКАЗА" aria-label="ДАТА ОТГРУЗКИ ЗАКАЗА">
                                     </td>
                                 </tr>
-                                
+                                <br>
                             </tbody>
                             <tbody>
                             <table class="table form-table table-bordered table-sm">
-
                                 <thead class="text-center">
-                                            <tr class="item">
-                                                <th scope='col'>Наименование работ,услуг</th>
-                                                <th scope='col'>Ед.изм.</th>
-                                                <th scope='col'>Кол-во</th>
-                                                <th scope='col'>Цена за единицу</th>
-                                                <th scope='col'>НДС</th>
-                                            </tr>
+                                    <tr class="item">
+                                        <th scope='col'>Наименование работ,услуг</th>
+                                        <th scope='col'>Ед.изм.</th>
+                                        <th scope='col'>Кол-во</th>
+                                        <th scope='col'>Цена за единицу</th>
+                                        <th scope='col'>НДС</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    {% for form_data in formset %}
-                                        <tr class="item">
-                                            <td>
-                                                <input name="form_data.name" type="text" class="form-control">
-                                            </td>
-                                            <td>
-                                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                                       value="option1" checked>
-                                                <label class="form-check-label" for="exampleRadios1">
-                                                    {{ form_data.status_order }}
-                                                </label>
-                                            </td>
-                                            <td>
-                                                <input name="form_data.amount" type="number" class="form-control">
-                                            
-                                            </td>
-                                            <td>
-                                                <input name="form_data.price" type="number" class="form-control">
-                                            
-                                            </td>
-                                            <td>
-                                                <input name="form_data.VAT" type="number" class="form-control">
-                                            
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-sm remove-form-row"
-                                                        id="{{ formset.prefix }}">
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    
-                                    {% endfor %}
-                                    </tbody>
-                            </table>
-                                    <tr>
-                                        <td colspan="9"
-                                            style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
-                                            <button type="button" class="btn btn-sm btn-success add-form-row"
-                                                    id="{{ formset.prefix }}">
-                                                Add
-                                            </button>
+                                {% for form_data in formset %}
+                                    <tr class="item">
+                                        <td>
+                                            <input name="form_data.name" type="text" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
+                                                   value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                {{ form_data.status_order }}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <input name="form_data.amount" type="number" class="form-control">
+                                        
+                                        </td>
+                                        <td>
+                                            <input name="form_data.price" type="number" class="form-control">
+                                        
+                                        </td>
+                                        <td>
+                                            <input name="form_data.VAT" type="number" class="form-control">
+                                        
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm remove-form-row" id="{{ formset.prefix }}">Delete</button>
                                         </td>
                                     </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                                <tr>
+                                    <td colspan="9" style="border-left: none!important; border-right: none !important; border-bottom: none!important;">
+                                        <button type="button" class="btn btn-sm btn-success add-form-row" id="{{ formset.prefix }}">Add</button>
+                                    </td>
+                                </tr>
                         </table>
                         
             </div>
