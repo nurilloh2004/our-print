@@ -244,7 +244,7 @@ class OrderForm(models.Model):
     
     @property
     def price_without_VAT(self):
-        price_without_VAT = OrderForm.price * OrderForm.amount
+        price_without_VAT = self.price * self.amount
         return price_without_VAT
 
     @property
