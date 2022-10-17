@@ -230,17 +230,12 @@ class OrderForm(models.Model):
         ('шт', 'шт'),
         ('усл', 'усл'),
     )
-    student = models.ForeignKey(Customer, related_name = "orders", on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, related_name = "orders", on_delete=models.CASCADE)
     name = models.CharField(max_length=65, blank=True, null=True)
     status_order = models.CharField(max_length=20, choices=Product_Status, default='шт', null=True, blank=True)
     amount = models.IntegerField(blank=True, null=True)
     price = models.PositiveIntegerField(blank=True, null=True)
-    price_without_VAT = models.PositiveIntegerField(blank=True, null=True)
     VAT = models.FloatField(blank=True, null=True)
-    price_with_VAT = models.PositiveIntegerField(blank=True, null=True)
-    total = models.PositiveIntegerField(blank=True, null=True)    
-    total_price_with_VAT = models.PositiveIntegerField(blank=True, null=True)    
-    total_price_ALL = models.PositiveIntegerField(blank=True, null=True)
     
     @property
     def price_without_VAT(self):

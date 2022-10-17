@@ -26,22 +26,20 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <input name="id_name_order" type="text" class="form-control" placeholder="Заказ" aria-label="№ Заказа">
+                                        <input name="id_name_order" type="text" class="form-control" value='id_name_order' placeholder="Заказ" aria-label="№ Заказа">
                                     </td>
                                     <td>
-                                        <input name="client" type="text" class="form-control" placeholder="Имя " aria-label="Имя ЗАКАЗЧИКА">
+                                        <input name="client" type="text" class="form-control" value='client' placeholder="Имя " aria-label="Имя ЗАКАЗЧИКА">
                                     </td>
                                     <td>
-                                        <input name="client_phone_number" type="text" class="form-control" placeholder="Номер" aria-label="Номер ТЕЛЕФОНА">
+                                        <input name="client_phone_number" type="text " value='client_phone_number' class="form-control" placeholder="Номер" aria-label="Номер ТЕЛЕФОНА">
+                                    </td>
+                                    
+                                    <td>
+                                        <input name="date_order" type="date" value='date_order' class="form-control" placeholder="ДАТА ПРИЕМА ЗАКАЗА" aria-label="ДАТА ПРИЕМА ЗАКАЗА">
                                     </td>
                                     <td>
-                                        <input name="manager_name" type="text" class="form-control" placeholder="Менеджер" aria-label="ОТВЕТСВЕННЫЙ Менеджер">
-                                    </td>
-                                    <td>
-                                        <input name="date_order" type="date" class="form-control" placeholder="ДАТА ПРИЕМА ЗАКАЗА" aria-label="ДАТА ПРИЕМА ЗАКАЗА">
-                                    </td>
-                                    <td>
-                                        <input name="ready_product_date_order" type="date" class="form-control" placeholder="ДАТА ОТГРУЗКИ ЗАКАЗА" aria-label="ДАТА ОТГРУЗКИ ЗАКАЗА">
+                                        <input name="ready_product_date_order" value='ready_product_date_order' type="date" class="form-control" placeholder="ДАТА ОТГРУЗКИ ЗАКАЗА" aria-label="ДАТА ОТГРУЗКИ ЗАКАЗА">
                                     </td>
                                 </tr>
                                 <br>
@@ -58,35 +56,55 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {% for form_data in formset %}
-                                    <tr class="item">
-                                        <td>
-                                            <input name="form_data.name" type="text" class="form-control">
-                                        </td>
-                                        <td>
-                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1"
-                                                   value="option1" checked>
-                                            <label class="form-check-label" for="exampleRadios1">
-                                                {{ form_data.status_order }}
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <input name="form_data.amount" type="number" class="form-control">
-                                        
-                                        </td>
-                                        <td>
-                                            <input name="form_data.price" type="number" class="form-control">
-                                        
-                                        </td>
-                                        <td>
-                                            <input name="form_data.VAT" type="number" class="form-control">
-                                        
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-danger btn-sm remove-form-row" id="{{ formset.prefix }}">Delete</button>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                                    {% for form_data in formset %}
+                                <tr class="item">
+                                    <td>
+                                        <label>Id</label>
+                                        {{ form_data.id }}
+                                    </td>
+                                    <td>
+                                        <label>Name</label>
+                                        {{ form_data.name }}
+                                    </td>
+                                    <td>
+                                        <label>Select</label>
+                                    	<select class="p-2" name="" id="">
+                                            <option class="small p-2" selected value="шт">{{form_data.status_order}}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <label>Amount</label>
+                                    	{{ form_data.amount }}
+                                    </td>
+                                    <td>
+                                        <label>Price</label>
+                                    	{{ form_data.price }}
+                                    </td>
+                                    <td>
+                                        <label>Wtihout Price VAT</label>
+                                    	{{ form_data.price_free_VAT }}
+                                    </td>
+                                    <td>
+                                        <label>VAT</label>
+                                    	{{ form_data.VAT }}
+                                    </td>
+                                    <td>
+                                        <label>Price VAT</label>
+                                    	{{ form_data.price_with_VAT }}
+                                    </td>
+                                    <td><label>Total</label>
+
+                                    	{{ form_data.total }}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm remove-form-row"
+                                                id="{{ formset.prefix }}">
+                                          
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                                 </tbody>
                             </table>
                                 <tr>
