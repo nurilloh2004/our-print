@@ -143,25 +143,24 @@ def createView(request):
 
 
 
-# def listview(request):
-    
-#     orders = OrderForm.objects.filter(manager=request.user.id).order_by('-id').first()
-#     total = 0
-#     all_price = orders.price * orders.amount
-#     percent_sum = (all_price / 100) * orders.VAT
-#     sum_list = all_price + percent_sum
-#     total = total + sum_list
-#     context = {}
-#     context['orders'] = orders
-#     context['sum_list'] = sum_list
-#     context['all_price'] = all_price
-#     context['total'] = total
-#     if orders.VAT:
-#         total = total + (total*orders.VAT/100)
-#         context['total_sum']=total
-        
-#     return render(request, 'multi_forms/list.html', context=context)
 
+def listVview(request):
+    
+    orders = OrderForm.objects.filter(manager=request.user.id).order_by('-id').first()
+    total = 0
+    all_price = 0
+    price_with_vat = 0
+    
+    if request.method == 'POST':
+        all_price = orders.amount * orders.price
+        price_with_vat = (all_price / 100) * orders.VAT
+        total = total + price_with_vat
+    context['all_price'] = all_price
+    context['total'] = total
+    context['price_with_vat'] = price_with_vat
+
+        
+    return render(request, 'list.html', context=context)
 
 
 
